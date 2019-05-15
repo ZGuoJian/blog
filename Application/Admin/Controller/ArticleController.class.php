@@ -101,7 +101,27 @@ class ArticleController extends Controller {
         $this->display();
     }
     public function add_notice(){
-        $this->display();
+        if(IS_POST){
+            $cate = M('notice');
+            $title = I('title');
+            $content = I('content');
+            $describe = I('describe');
+            $data[] = array(
+                'title' => $title,
+                'content' => $content,
+                'describe' => $describe
+            );
+            $result = $cate->addAll($data);
+            // $sql = $cate->getLastSql();
+            // echo $sql;
+            if($result){
+                $this->redirect("Admin/Article/notice");
+            }else{
+                $this->error('修改失败');
+            }          
+        }else{
+            $this->display();
+        }
     }
 
 }
